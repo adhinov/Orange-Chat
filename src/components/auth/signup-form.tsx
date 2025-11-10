@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Lock, Mail, Phone, User } from 'lucide-react';
 import { useState } from 'react';
@@ -126,6 +126,9 @@ export function SignUpForm() {
                   />
                 </FormControl>
               </div>
+              <FormDescription className="text-xs">
+                Password must be at least 8 characters.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
