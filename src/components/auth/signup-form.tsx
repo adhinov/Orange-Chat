@@ -6,7 +6,7 @@ import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Lock, Phone, User } from 'lucide-react';
+import { Lock, Mail, Phone, User } from 'lucide-react';
 import { useState } from 'react';
 
 const formSchema = z.object({
@@ -17,6 +17,9 @@ const formSchema = z.object({
     message: 'Phone number is required.',
   }).min(10, {
     message: 'Phone number must be at least 10 characters.',
+  }),
+  email: z.string().email({
+    message: 'Please enter a valid email address.',
   }),
   password: z.string().min(1, {
     message: 'Password is required.'
@@ -33,6 +36,7 @@ export function SignUpForm() {
     defaultValues: {
       name: '',
       phone: '',
+      email: '',
       password: '',
     },
   });
@@ -77,6 +81,26 @@ export function SignUpForm() {
                 <FormControl>
                   <Input 
                     placeholder="Phone Number" 
+                    {...field} 
+                    className="h-12 pl-10 transition-shadow duration-300 focus:shadow-sm" 
+                  />
+                </FormControl>
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <FormControl>
+                  <Input 
+                    type="email"
+                    placeholder="Email Address" 
                     {...field} 
                     className="h-12 pl-10 transition-shadow duration-300 focus:shadow-sm" 
                   />
