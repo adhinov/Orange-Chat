@@ -20,7 +20,6 @@ export default function AdminDashboardPage() {
   const [lastLogin, setLastLogin] = useState<string>('');
 
   useEffect(() => {
-    // Check if token exists and user is admin
     const token = localStorage.getItem('token');
     if (!token) {
       router.push('/');
@@ -34,7 +33,6 @@ export default function AdminDashboardPage() {
         return;
       }
       
-      // Set last login time
       const now = new Date();
       setLastLogin(now.toLocaleString('id-ID', { 
         day: 'numeric',
@@ -45,7 +43,6 @@ export default function AdminDashboardPage() {
         timeZoneName: 'short'
       }));
 
-      // Fetch users data
       fetchUsers();
     } catch (error) {
       console.error('Error parsing token:', error);
@@ -117,30 +114,20 @@ export default function AdminDashboardPage() {
 
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-800 text-white">
-                <tr>
-                  <th className="px-4 py-3 text-left">ID</th>
-                  <th className="px-4 py-3 text-left">Email</th>
-                  <th className="px-4 py-3 text-left">Username</th>
-                  <th className="px-4 py-3 text-left">Role</th>
-                  <th className="px-4 py-3 text-left">Created At</th>
-                  <th className="px-4 py-3 text-left">Phone</th>
-                </tr>
-              </thead>
-              <tbody>
+              {/* PERBAIKAN: Seluruh thead dijadikan satu baris panjang agar tidak ada spasi/enter di antara tag */}
+              <thead className="bg-gray-800 text-white text-sm"><tr><th className="px-2 py-2 text-left">ID</th><th className="px-2 py-2 text-left">Email</th><th className="px-2 py-2 text-left">Username</th><th className="px-2 py-2 text-left">Role</th><th className="px-2 py-2 text-left">Created At</th><th className="px-2 py-2 text-left">Phone</th></tr></thead>
+              <tbody className="text-sm">
                 {filteredUsers.map((user) => (
                   <tr key={user.id} className="border-b hover:bg-gray-50">
-                    <td className="px-4 py-3">{user.id}</td>
-                    <td className="px-4 py-3">{user.email}</td>
-                    <td className="px-4 py-3">{user.username}</td>
-                    <td className="px-4 py-3">
-                      <span className={`px-2 py-1 rounded-full text-xs ${
-                        user.role === 'admin' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
-                      }`}>
+                    <td className="px-2 py-2">{user.id}</td>
+                    <td className="px-2 py-2 text-xs">{user.email}</td>
+                    <td className="px-2 py-2">{user.username}</td>
+                    <td className="px-2 py-2">
+                      <span className={`px-1 py-0.5 rounded-full text-xs ${user.role === 'admin' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}>
                         {user.role.toUpperCase()}
                       </span>
                     </td>
-                    <td className="px-4 py-3">
+                    <td className="px-2 py-2 text-xs">
                       {new Date(user.createdAt).toLocaleString('id-ID', {
                         day: 'numeric',
                         month: 'short',
@@ -150,7 +137,7 @@ export default function AdminDashboardPage() {
                         timeZoneName: 'short'
                       })}
                     </td>
-                    <td className="px-4 py-3">{user.phone || '-'}</td>
+                    <td className="px-2 py-2">{user.phone || '-'}</td>
                   </tr>
                 ))}
               </tbody>
