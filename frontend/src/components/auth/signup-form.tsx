@@ -1,4 +1,5 @@
- 'use client';
+// frontend/src/components/auth/signup-form.tsx
+'use client';
 
 import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
